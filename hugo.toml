@@ -7,7 +7,6 @@ theme = 'hugo-book'
 [params]
   BookSearch = true        # 开启搜索
   BookTheme = 'auto'       # 自动深色模式
-  BookMenuBundle = '/menu' # 推荐：使用文件树自动生成左侧菜单
   BookSection = 'docs'     # 指定文档目录
 
   # 开启数学公式 (LaTeX)
