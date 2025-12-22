@@ -55,7 +55,6 @@ else
         --exclude '.trash' \
         --exclude '*.tmp' \
         --exclude 'drafts/' \
-        --exclude '_index.md' \
         "$OBSIDIAN_CONTENT/" "$HUGO_CONTENT/" > /dev/null 2>&1
 
     echo "  ✓ 内容同步完成"
