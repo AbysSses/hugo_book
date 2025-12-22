@@ -1,0 +1,24 @@
+# ⚠️ 注意：baseURL 暂时先填个假的，等 Vercel 生成域名后我们再回来改
+baseURL = 'https://example.com/'
+languageCode = 'zh-cn'
+title = '我的知识库'
+theme = 'hugo-book'
+
+[params]
+  BookSearch = true        # 开启搜索
+  BookTheme = 'auto'       # 自动深色模式
+  BookMenuBundle = '/menu' # 推荐：使用文件树自动生成左侧菜单
+
+  # 开启数学公式 (LaTeX)
+  BookPortableLinks = true
+  [params.katex]
+    enable = true
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true # 允许 HTML/JS (Mermaid 必需)
+
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
