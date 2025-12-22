@@ -325,6 +325,8 @@ width: 140px; /* 头像宽度 */
 
 height: 140px; /* 头像高度 */
 
+aspect-ratio: 1 / 1; /* 强制正方形 */
+
 border-radius: 50%; /* 圆形 */
 
 border: 1px solid rgba(255, 255, 255, 0.4); /* 描边 */
