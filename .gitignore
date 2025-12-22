@@ -1,3 +1,23 @@
+# Hugo 构建输出目录 - Vercel 会自动构建，不需要提交
 public/
-resources/
+resources/_gen/
+
+# Hugo 锁文件
+.hugo_build.lock
+
+# macOS 系统文件
 .DS_Store
+
+# 编辑器/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 临时文件
+*.log
+*.tmp
+
+# Node modules (如果使用)
+node_modules/
