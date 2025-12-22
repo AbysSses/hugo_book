@@ -14,7 +14,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 BOOK_DIR="$HOME/AI/gemini_project/hugo_site/my_book"
 
 # 2. Obsidian 知识库源目录（包含 docs 和 posts）
-OBSIDIAN_BOOK="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/LifeOS/6. Website/2. hugo_book"
+OBSIDIAN_BOOK="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/LifeOS/6. Website/2.hugo_books"
 OBSIDIAN_POSTS="$OBSIDIAN_BOOK/posts"
 
 # 3. Hugo 目标目录
