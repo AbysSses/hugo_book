@@ -122,6 +122,67 @@ pointer-events: none; /* 不阻挡交互 */
 
 }
 
+
+/* 右上角返回按钮 */
+
+.abyss-back {
+
+position: fixed; /* 固定在视口 */
+
+top: 1.5rem; /* 顶部间距 */
+
+right: 1.5rem; /* 右侧间距 */
+
+z-index: 3; /* 高于内容 */
+
+}
+
+.abyss-back a {
+
+display: inline-flex; /* 方便对齐 */
+
+align-items: center; /* 垂直居中 */
+
+gap: 0.5rem; /* 图标与文字间距 */
+
+text-decoration: none; /* 去下划线 */
+
+color: var(--cold-text) !important; /* 文字颜色 */
+
+font-size: 1rem; /* 字号 */
+
+font-weight: 600; /* 字重 */
+
+padding: 0.5rem 0.9rem; /* 内边距 */
+
+border-radius: 999px; /* 胶囊圆角 */
+
+background: rgba(255, 255, 255, 0.08); /* 背景 */
+
+border: 1px solid rgba(255, 255, 255, 0.3); /* 边框 */
+
+backdrop-filter: blur(10px); /* 毛玻璃 */
+
+-webkit-backdrop-filter: blur(10px); /* Safari 兼容 */
+
+text-shadow: none !important; /* 去掉文本阴影 */
+
+filter: none !important; /* 禁用滤镜 */
+
+mix-blend-mode: normal; /* 禁止混合模式 */
+
+transition: transform 0.2s ease, background 0.2s ease; /* 过渡 */
+
+}
+
+.abyss-back a:hover {
+
+transform: translateY(-1px); /* 悬停抬起 */
+
+background: rgba(255, 255, 255, 0.16); /* 悬停背景 */
+
+}
+
   
 
 /* 页面内容层 */
@@ -755,6 +816,12 @@ grid-column: span 1; /* 单列占满 */
 </video>
 
 <div class="abyss-overlay"></div>
+
+<div class="abyss-back">
+
+<a href="https://hcyang.us.kg/">← Back</a>
+
+</div>
 
   
 

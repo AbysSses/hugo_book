@@ -24,7 +24,6 @@ theme = 'hugo-book'
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true # 允许 HTML/JS (Mermaid 必需)
-
   [markup.tableOfContents]
     startLevel = 2
     endLevel = 4
