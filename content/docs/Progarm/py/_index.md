@@ -13,4 +13,4 @@ bookCollapseSection: false
 
   
 
-这里是入门指南。
+这里是Pyhton

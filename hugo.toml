@@ -1,7 +1,7 @@
 # ⚠️ 注意：baseURL 暂时先填个假的，等 Vercel 生成域名后我们再回来改
 baseURL = 'https://book.hcyang.us.kg/'
 languageCode = 'zh-cn'
-title = '我的知识库'
+title = '⚡Abyss⚡'
 theme = 'hugo-book'
 
 [params]

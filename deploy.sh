@@ -14,13 +14,10 @@ export PATH="/opt/homebrew/bin:$PATH"
 BOOK_DIR="$HOME/AI/gemini_project/hugo_site/my_book"
 
 # 2. Obsidian 知识库源目录
-OBSIDIAN_BASE="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/LifeOS/6. Website/2.hugo_books"
-OBSIDIAN_DOCS="$OBSIDIAN_BASE/docs"
-OBSIDIAN_POSTS="$OBSIDIAN_BASE/posts"
+OBSIDIAN_CONTENT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/LifeOS/6. Website/2.hugo_books"
 
 # 3. Hugo 目标目录
-HUGO_DOCS="$BOOK_DIR/content/docs"
-HUGO_POSTS="$BOOK_DIR/content/posts"
+HUGO_CONTENT="$BOOK_DIR/content"
 
 # 4. 主题目录（Git submodule）
 THEME_DIR="$BOOK_DIR/themes/hugo-book"
@@ -39,61 +36,40 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "📚 同步 Obsidian 内容到 Hugo..."
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-# 1.1 同步文档（docs）
-if [ ! -d "$OBSIDIAN_DOCS" ]; then
-    echo "⚠️  警告：Obsidian 文档目录不存在"
-    echo "   路径：$OBSIDIAN_DOCS"
-    echo "   跳过文档同步..."
+# 检查源目录是否存在
+if [ ! -d "$OBSIDIAN_CONTENT" ]; then
+    echo "⚠️  警告：Obsidian 源目录不存在"
+    echo "   路径：$OBSIDIAN_CONTENT"
+    echo "   跳过内容同步，仅推送本地修改..."
+    echo ""
 else
-    echo "📖 同步文档 (docs)..."
-    echo "  源目录: $OBSIDIAN_DOCS"
-    echo "  目标目录: $HUGO_DOCS"
+    echo "📖 同步内容 (content)..."
+    echo "  源目录: $OBSIDIAN_CONTENT"
+    echo "  目标目录: $HUGO_CONTENT"
+    echo ""
 
+    # 同步整个 content 目录
     rsync -a --delete \
         --exclude '.DS_Store' \
         --exclude '.obsidian' \
         --exclude '.trash' \
         --exclude '*.tmp' \
         --exclude 'drafts/' \
-        "$OBSIDIAN_DOCS/" "$HUGO_DOCS/" > /dev/null 2>&1
+        --exclude '_index.md' \
+        "$OBSIDIAN_CONTENT/" "$HUGO_CONTENT/" > /dev/null 2>&1
 
-    echo "  ✓ 文档同步完成"
-fi
+    echo "  ✓ 内容同步完成"
+    echo ""
 
-echo ""
-
-# 1.2 同步博客文章（posts）
-if [ ! -d "$OBSIDIAN_POSTS" ]; then
-    echo "⚠️  警告：Obsidian 博客目录不存在"
-    echo "   路径：$OBSIDIAN_POSTS"
-    echo "   跳过博客同步..."
-else
-    echo "📝 同步博客文章 (posts)..."
-    echo "  源目录: $OBSIDIAN_POSTS"
-    echo "  目标目录: $HUGO_POSTS"
-
-    mkdir -p "$HUGO_POSTS"
-    rsync -a --delete \
-        --exclude '.DS_Store' \
-        --exclude '.obsidian' \
-        --exclude '.trash' \
-        --exclude '*.tmp' \
-        --exclude 'drafts/' \
-        "$OBSIDIAN_POSTS/" "$HUGO_POSTS/" > /dev/null 2>&1
-
-    echo "  ✓ 博客同步完成"
-fi
-
-echo ""
-
-# 1.3 同步附件（如果存在）
-if [ -d "$OBSIDIAN_ATTACHMENTS" ]; then
-    echo "🖼️  同步附件..."
-    mkdir -p "$HUGO_ATTACHMENTS"
-    rsync -a --delete \
-        --exclude '.DS_Store' \
-        "$OBSIDIAN_ATTACHMENTS/" "$HUGO_ATTACHMENTS/" > /dev/null 2>&1
-    echo "  ✓ 附件同步完成"
+    # 同步附件（如果存在）
+    if [ -d "$OBSIDIAN_ATTACHMENTS" ]; then
+        echo "🖼️  同步附件..."
+        mkdir -p "$HUGO_ATTACHMENTS"
+        rsync -a --delete \
+            --exclude '.DS_Store' \
+            "$OBSIDIAN_ATTACHMENTS/" "$HUGO_ATTACHMENTS/" > /dev/null 2>&1
+        echo "  ✓ 附件同步完成"
+    fi
 fi
 
 echo ""

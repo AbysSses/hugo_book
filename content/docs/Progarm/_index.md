@@ -1,10 +1,10 @@
 ---
 
-title: "章节标题"
+title: "Progarm"
 
 weight: 1 # 章节排序
 
-bookCollapseSection: false # false=默认展开, true=默认折叠
+bookCollapseSection: true # false=默认展开, true=默认折叠
 
 # bookFlatSection: false # 保持层级结构（默认）
 
