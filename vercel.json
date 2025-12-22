@@ -1,0 +1,13 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "main": true
+    }
+  },
+  "build": {
+    "env": {
+      "HUGO_VERSION": "0.153.0"
+    }
+  },
+  "installCommand": "git submodule update --init --recursive && echo 'Submodules initialized'"
+}
