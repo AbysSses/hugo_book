@@ -1,12 +1,16 @@
 ---
+title: 1. 激活你的环境
+draft: false
+weight:
 tags:
   - bioinformatics
   - jupyter
   - knowledge-management
   - tutorial
   - linux
-date: 2025-4-10
+date: 2025-04-28 13:41:57
 dg-publish: true
+LastMod: 2025-12-23 15:11:43
 ---
 ## PY
 

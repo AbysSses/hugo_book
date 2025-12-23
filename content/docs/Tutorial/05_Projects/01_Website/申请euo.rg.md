@@ -1,12 +1,16 @@
 ---
+title: 申请euo.rg
+draft: false
+weight:
 tags:
   - PARA/Capture
   - domain
   - knowledge-management
   - tutorial
   - website
-date: 2025-4-14
+date: 2025-04-14 17:04:01
 dg-publish: true
+LastMod: 2025-12-23 15:11:26
 ---
 ## 官网操作
 www.eu.org
