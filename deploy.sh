@@ -127,7 +127,7 @@ echo ""
 # ===== 4. 系统通知（可选） =====
 if command -v terminal-notifier &> /dev/null; then
     terminal-notifier \
-        -message "知识库已发布，点击查看" \
+        -message "✅ hugo-book发布完成" \
         -title "Hugo Book 部署完成" \
         -open "https://book.hcyang.us.kg/" \
         2>/dev/null
