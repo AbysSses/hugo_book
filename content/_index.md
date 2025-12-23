@@ -821,7 +821,7 @@ grid-column: span 1; /* 单列占满 */
 
 <div class="abyss-back">
 
-<a href="https://hcyang.us.kg/">← Back</a>
+<a href="https://abysses.love/">← Back</a>
 
 </div>
 
