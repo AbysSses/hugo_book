@@ -1,0 +1,900 @@
+/* ============================================
+   Hugo Book - Ambient Glassmorphism Theme v2.0
+   环境式玻璃拟态主题 - 增强版
+   ============================================
+   Description: 真正的半透明磨砂玻璃效果 + 美化代码块 + 博客卡片布局
+   Author: Claude Code
+   Version: 2.0.0
+   ============================================ */
+
+/* ============================================
+   1. 变量定义 - Variables Definition
+   ============================================ */
+
+/* 渐变背景色 - 更饱和的颜色以增强对比 */
+$bg-gradient-1: #e8e4f3;  // 淡紫
+$bg-gradient-2: #e3f2fd;  // 淡蓝
+$bg-gradient-3: #fce4ec;  // 淡粉
+$bg-gradient-4: #f5f5fa;  // 淡灰紫
+
+/* 玻璃效果透明度 */
+$glass-opacity-full: 0.25;     // 主内容区域 - 降低透明度让磨砂效果更明显
+$glass-opacity-light: 1;     // 侧边栏
+$glass-opacity-code: 0.5;     // 代码块 - 提高不透明度确保清晰
+
+/* 模糊参数 */
+$blur-strong: 30px;            // 强模糊（主内容）- 增加模糊度
+$blur-medium: 20px;            // 中度模糊
+$blur-light: 12px;             // 轻模糊（侧边栏）
+$blur-code: 10px;              // 代码块模糊
+
+/* 圆角参数 */
+$border-radius-large: 24px;    // 大圆角 - 更圆润
+$border-radius-medium: 16px;   // 中圆角
+$border-radius-small: 12px;    // 小圆角
+
+/* 间距参数 */
+$content-padding: 3rem;
+$content-margin: 2rem;
+$sidebar-padding: 1.5rem;
+$card-gap: 2rem;               // 卡片间距
+
+/* ============================================
+   2. Mixin 定义 - Mixin Definition
+   ============================================ */
+
+/**
+ * 完整玻璃拟态效果 Mixin - 真正的磨砂玻璃
+ */
+@mixin glassmorphism-full($blur: $blur-strong, $opacity: $glass-opacity-full, $radius: $border-radius-large) {
+  position: relative;
+
+  /* 半透明白色背景 */
+  background: rgba(255, 255, 255, $opacity);
+
+  /* 磨砂玻璃效果 - 关键 */
+  backdrop-filter: blur($blur) saturate(180%);
+  -webkit-backdrop-filter: blur($blur) saturate(180%);
+
+  /* 半透明边框增强玻璃感 */
+  border: 1px solid rgba(255, 255, 255, 0.6);
+
+  /* 圆角 */
+  border-radius: $radius;
+
+  /* 多层阴影 - 增强漂浮感 */
+  box-shadow:
+    0 8px 32px rgba(31, 38, 135, 0.15),
+    0 4px 16px rgba(31, 38, 135, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.5);
+
+  /* 性能优化 */
+  will-change: backdrop-filter;
+}
+
+/**
+ * 轻度玻璃化效果 Mixin
+ */
+@mixin glassmorphism-light($blur: $blur-light, $opacity: $glass-opacity-light, $radius: $border-radius-medium) {
+  position: relative;
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur) saturate(160%);
+  -webkit-backdrop-filter: blur($blur) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: $radius;
+  box-shadow:
+    0 4px 16px rgba(31, 38, 135, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4);
+}
+
+/**
+ * 代码块浅色背景 - 类似 IDE 的浅色主题
+ */
+@mixin glassmorphism-code($blur: 0px, $opacity: $glass-opacity-code) {
+  position: relative;
+
+  /* 浅色背景 - 类似白色/米色 */
+  background: rgba(250, 250, 252, $opacity);
+
+  /* 移除模糊效果，保持代码清晰 */
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+
+  /* 浅色边框 */
+  border: 1px solid rgba(220, 220, 230, 0.8);
+  border-radius: $border-radius-small;
+
+  /* 轻柔阴影 */
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/**
+ * 卡片玻璃效果 Mixin
+ */
+@mixin glassmorphism-card($blur: $blur-medium, $opacity: 0.3) {
+  @include glassmorphism-full($blur, $opacity, $border-radius-medium);
+
+  /* 卡片悬停效果 */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 12px 40px rgba(31, 38, 135, 0.2),
+      0 6px 20px rgba(31, 38, 135, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+  }
+}
+
+/* ============================================
+   3. 基础样式覆盖 - Base Styles Override
+   ============================================ */
+
+/**
+ * Body 渐变背景 - 更饱和的颜色
+ */
+body {
+  /* 多层渐变背景 - 使用实色而非 rgba */
+  background:
+    linear-gradient(
+      135deg,
+      $bg-gradient-1 0%,
+      $bg-gradient-2 33%,
+      $bg-gradient-3 66%,
+      $bg-gradient-4 100%
+    );
+
+  /* 固定背景 */
+  background-attachment: fixed;
+  min-height: 100vh;
+
+  /* 添加一些纹理感 */
+  &::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+      radial-gradient(circle at 20% 50%, rgba(120, 100, 200, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(100, 150, 255, 0.1) 0%, transparent 50%),
+      radial-gradient(circle at 40% 20%, rgba(255, 100, 150, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;  /* 改为负值，确保在所有内容之下 */
+  }
+}
+
+html {
+  min-height: 100vh;
+}
+
+/* 确保主容器在背景之上 */
+.book-page {
+  position: relative;
+  z-index: 10;
+}
+
+/* 侧边栏层级必须高于内容，否则无法交互 */
+.book-menu,
+.book-toc {
+  position: relative;
+  z-index: 20;  /* 提高层级，高于 .book-page */
+}
+
+/* 确保菜单和目录内容在最上层且固定 */
+.book-menu-content,
+.book-toc-content {
+  position: fixed !important; /* 强制固定定位，覆盖 mixin 可能设置的 relative */
+  z-index: 100;  /* 更高的层级 */
+}
+
+/* ============================================
+   4. 主要组件样式 - Main Component Styles
+   ============================================ */
+
+/**
+ * 主内容区域 - 真正的磨砂玻璃效果
+ */
+.book-page {
+  @include glassmorphism-full();
+
+  /* 大留白 */
+  padding: $content-padding !important;
+  margin: $content-margin !important;
+  max-width: calc(100% - #{$content-margin * 2});
+
+  /* 确保文字对比度 */
+  color: #1a1a2e;
+}
+
+/**
+ * 右侧目录 - 轻度玻璃化
+ */
+.book-toc-content {
+  @include glassmorphism-light();
+  padding: $sidebar-padding !important;
+
+  /* 确保目录可以交互 */
+  pointer-events: auto;
+
+  a {
+    color: #2a2a4e;
+    padding: 0.4rem 0;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 10;
+    pointer-events: auto;
+    cursor: pointer;
+    display: block;
+
+    &:hover {
+      opacity: 0.7;
+      color: #0066cc;
+    }
+  }
+
+  nav,
+  ul,
+  li {
+    pointer-events: auto;
+  }
+}
+
+/**
+ * 搜索框优化
+ */
+.book-search {
+  input {
+    @include glassmorphism-light($blur-light, 0.3, $border-radius-small);
+    border: 1px solid rgba(255, 255, 255, 0.7) !important;
+    color: #1a1a2e !important;
+
+    &::placeholder {
+      color: rgba(26, 26, 46, 0.5);
+    }
+
+    &:focus {
+      background: rgba(255, 255, 255, 0.5);
+      outline: 2px solid rgba(100, 150, 255, 0.4);
+      outline-offset: 0;
+    }
+  }
+}
+
+/* ============================================
+   5. 代码块美化 - Beautiful Code Blocks
+   ============================================ */
+
+/**
+ * 代码块 - 浅色清晰背景
+ */
+pre {
+  @include glassmorphism-code();
+  padding: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  overflow-x: auto;
+  font-family: 'Source Code Pro', monospace !important; /* 全局代码块字体 */
+
+  /* 代码样式 - 深色文字在浅色背景上 */
+  code {
+    background: transparent !important;
+    color: #24292e !important;  // 深灰色文字（类似 GitHub）
+    font-family: 'Source Code Pro', monospace !important; /* 全局代码块字体 */
+    font-size: 0.9rem;
+    line-height: 1.7;
+    text-shadow: none;
+  }
+}
+
+/* 行内代码 - 浅色清晰效果 */
+:not(pre) > code {
+  background: rgba(100, 150, 255, 0.18) !important;
+  color: #003d82 !important;  // 更深的蓝色，增强对比度
+  padding: 0.2em 0.6em !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(100, 150, 255, 0.35);
+  font-family: 'Source Code Pro', monospace !important; /* 全局代码块字体 */
+  font-size: 0.9em;
+  font-weight: 500;  // 稍微加粗
+  backdrop-filter: none;  // 移除模糊
+  -webkit-backdrop-filter: none;
+}
+
+/* 代码块语法高亮优化 - 浅色主题配色 */
+.highlight {
+  @include glassmorphism-code();
+  border-radius: $border-radius-small !important;
+  font-family: 'Source Code Pro', monospace !important; /* 全局代码块字体 */
+
+  pre {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    font-family: 'Source Code Pro', monospace !important; /* 全局代码块字体 */
+  }
+
+  /* 浅色主题语法高亮颜色（类似 VSCode Light） */
+  .nt,  // HTML tags
+  .na,  // Attributes
+  .nb,  // Built-ins
+  .nc {  // Class names
+    color: #d73a49 !important;  // 红色
+    font-weight: 500;
+  }
+
+  .s,   // Strings
+  .s1,
+  .s2 {
+    color: #032f62 !important;  // 深蓝色字符串
+  }
+
+  .k,   // Keywords
+  .kd,
+  .kn {
+    color: #d73a49 !important;  // 红色关键字
+    font-weight: 600;
+  }
+
+  .c,   // Comments
+  .c1,
+  .cm {
+    color: #6a737d !important;  // 灰色注释
+    font-style: italic;
+  }
+
+  .mi,  // Numbers
+  .mf,
+  .mh {
+    color: #005cc5 !important;  // 蓝色数字
+  }
+
+  .nf {  // Function names
+    color: #6f42c1 !important;  // 紫色函数名
+  }
+
+  .nx {  // Variables
+    color: #24292e !important;  // 深灰色变量
+  }
+}
+
+/* ============================================
+   6. Posts 博客卡片布局 - Blog Card Layout
+   ============================================ */
+
+/**
+ * 博客列表容器
+ */
+.book-page {
+  /* Posts 列表页特殊处理 */
+  &:has(.book-post) {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+  }
+}
+
+/**
+ * 单个博客文章卡片 - 环境式玻璃卡片
+ */
+.book-post {
+  @include glassmorphism-card();
+
+  padding: 2rem !important;
+  margin-bottom: $card-gap !important;
+  position: relative; /* Ensure relative context for overlay */
+  
+  /* 博客内容字体 - 仅针对 posts */
+  font-family: 'IBM Plex Serif', serif;
+
+  /* 卡片全覆盖链接 */
+  .book-post-overlay-link {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  /* 标题样式 */
+  h2, .book-post-title {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+    text-align: center !important; /* 居中 */
+    font-weight: 700 !important;   /* 加粗 */
+    color: #1a1a2e;                /* 确保颜色正确 */
+    position: relative;
+    /* z-index 不设置，使其位于 overlay 下方，这样点击标题也能触发 overlay */
+    
+    /* 博客标题字体 - 仅针对 posts */
+    font-family: 'Comfortaa', cursive !important;
+
+    /* 移除标题装饰线 */
+    &::after {
+      display: none !important;
+    }
+  }
+
+  /* 文章摘要 */
+  .book-post-content {
+    color: #3a3a5a;
+    line-height: 1.8;
+    margin-top: 1rem;
+    position: relative;
+    /* z-index 不设置，使其位于 overlay 下方 */
+    
+    /* 博客正文/摘要字体 - 仅针对 posts */
+    font-family: 'IBM Plex Serif', serif !important;
+  }
+
+  /* 缩略图 */
+  .book-post-thumbnail {
+    img {
+      border-radius: $border-radius-small;
+      box-shadow: 0 4px 16px rgba(31, 38, 135, 0.15);
+    }
+  }
+}
+
+/**
+ * 文章元信息（日期、标签等）
+ */
+.book-post-meta {
+  background: rgba(100, 150, 255, 0.1) !important;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  padding: 0.5rem 1rem !important;
+  border-radius: 8px !important;
+  margin-bottom: 1rem !important;
+  font-size: 0.875rem !important;
+  color: #555 !important;
+  border: 1px solid rgba(100, 150, 255, 0.2);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  /* 确保标签链接位于卡片链接之上 */
+  position: relative;
+  z-index: 2;
+
+  a {
+    position: relative;
+    z-index: 2;
+    
+    &:hover {
+      color: #0066cc;
+      text-decoration: underline;
+    }
+  }
+}
+
+/**
+ * 单篇博客文章页面
+ */
+article.book-post {
+  @include glassmorphism-full();
+  padding: $content-padding !important;
+  
+  /* 博客正文内容字体 - 仅针对 posts */
+  font-family: 'IBM Plex Serif', serif !important;
+
+  h1, h2, h3, h4, h5, h6 {
+    color: #1a1a2e;
+    font-weight: 600;
+    
+    /* 博客章节标题字体 - 仅针对 posts */
+    font-family: 'Comfortaa', cursive !important;
+
+    /* 移除标题装饰线 */
+    &::after {
+      display: none !important;
+    }
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* ============================================
+   7. 特殊元素优化 - Special Elements
+   ============================================ */
+
+/**
+ * 引用块 - 玻璃效果
+ */
+blockquote {
+  background: rgba(100, 150, 255, 0.08) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-left: 4px solid rgba(100, 150, 255, 0.6) !important;
+  border-radius: 0 $border-radius-small $border-radius-small 0 !important;
+  padding: 1.25rem 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  border: 1px solid rgba(100, 150, 255, 0.15);
+  border-left: 4px solid rgba(100, 150, 255, 0.6) !important;
+  color: #2a2a4e;
+}
+
+/**
+ * 表格 - 玻璃效果
+ */
+table {
+  background: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: $border-radius-small !important;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  thead {
+    background: rgba(100, 150, 255, 0.15) !important;
+
+    th {
+      color: #1a1a2e;
+      font-weight: 600;
+      padding: 1rem;
+    }
+  }
+
+  tbody tr {
+    &:hover {
+      background: rgba(100, 150, 255, 0.08) !important;
+    }
+
+    td {
+      padding: 0.875rem 1rem;
+      color: #2a2a4e;
+    }
+  }
+}
+
+/**
+ * Hint 提示框
+ */
+.book-hint {
+  background: rgba(255, 255, 255, 0.25) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: $border-radius-small !important;
+  border-left-width: 4px !important;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 12px rgba(31, 38, 135, 0.1);
+}
+
+/**
+ * 按钮优化
+ */
+.book-btn,
+a.book-btn {
+  background: rgba(100, 150, 255, 0.2) !important;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(100, 150, 255, 0.4) !important;
+  border-radius: $border-radius-small !important;
+  color: #0066cc !important;
+  padding: 0.75rem 1.5rem !important;
+  font-weight: 500;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:hover {
+    background: rgba(100, 150, 255, 0.3) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(100, 150, 255, 0.3);
+  }
+}
+
+/* ============================================
+   8. 标题和文本优化 - Typography
+   ============================================ */
+
+/**
+ * 标题样式
+ */
+.book-page {
+  h1, h2, h3, h4, h5, h6 {
+    color: #1a1a2e;
+    font-weight: 600;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+
+    /* 标题底部装饰线 */
+    &::after {
+      content: '';
+      display: block;
+      width: 4rem;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        rgba(100, 150, 255, 0.7) 0%,
+        rgba(100, 150, 255, 0.3) 70%,
+        transparent 100%
+      );
+      margin-top: 0.75rem;
+      border-radius: 2px;
+    }
+  }
+
+  h1 {
+    font-size: 2.25rem;
+
+    &::after {
+      width: 6rem;
+      height: 4px;
+    }
+  }
+
+  h2 {
+    font-size: 1.875rem;
+  }
+
+  h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/**
+ * 链接优化
+ */
+.book-page {
+  a[href] {
+    color: #0066cc;
+    text-decoration: underline;
+    text-decoration-color: rgba(0, 102, 204, 0.3);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+    transition: all 0.2s ease;
+
+    &:hover {
+      color: #0052a3;
+      text-decoration-color: rgba(0, 82, 163, 0.6);
+    }
+
+    &:visited {
+      color: #5500bb;
+    }
+  }
+}
+
+/**
+ * 分割线
+ */
+hr {
+  border: none !important;
+  height: 2px !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(100, 150, 255, 0.4) 50%,
+    transparent 100%
+  ) !important;
+  margin: 2.5rem 0 !important;
+}
+
+/**
+ * 列表优化
+ */
+.book-page {
+  ul, ol {
+    li {
+      margin: 0.75rem 0;
+      line-height: 1.8;
+      color: #2a2a4e;
+
+      &::marker {
+        color: #0066cc;
+      }
+    }
+  }
+}
+
+/**
+ * 图片优化
+ */
+.book-page img {
+  border-radius: $border-radius-small;
+  box-shadow: 0 8px 24px rgba(31, 38, 135, 0.15);
+  max-width: 100%;
+  height: auto;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* ============================================
+   9. 页面布局优化 - Layout Fine-tuning
+   ============================================ */
+
+/**
+ * 页脚样式
+ */
+.book-footer {
+  background: rgba(255, 255, 255, 0.15) !important;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: $border-radius-small !important;
+  padding: 1.25rem !important;
+  margin-top: 2rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/**
+ * 分页组件
+ */
+.book-pagination {
+  margin-top: 2rem;
+
+  a {
+    @include glassmorphism-light($blur-light, 0.25, 8px);
+    padding: 0.75rem 1.25rem !important;
+    margin: 0 0.5rem;
+    color: #0066cc !important;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(100, 150, 255, 0.25);
+      transform: translateY(-2px);
+    }
+  }
+}
+
+/* ============================================
+   10. 响应式设计 - Responsive Design
+   ============================================ */
+
+@media screen and (max-width: $mobile-breakpoint) {
+  body::before {
+    opacity: 0.5; // 移动端降低纹理强度
+  }
+
+  .book-page {
+    backdrop-filter: blur($blur-medium);
+    -webkit-backdrop-filter: blur($blur-medium);
+    padding: 1.5rem !important;
+    margin: 1rem !important;
+    max-width: calc(100% - 2rem);
+  }
+
+  .book-post {
+    padding: 1.5rem !important;
+    margin-bottom: 1.5rem !important;
+
+    h2 a {
+      font-size: 1.5rem;
+    }
+  }
+
+  .book-menu-content,
+  .book-toc-content {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 1rem !important;
+  }
+
+  pre {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 1rem !important;
+  }
+}
+
+@media screen and (min-width: $mobile-breakpoint) and (max-width: 1024px) {
+  .book-page {
+    padding: 2rem !important;
+    margin: 1.5rem !important;
+  }
+
+  .book-post {
+    padding: 1.75rem !important;
+  }
+}
+
+/* ============================================
+   11. 浏览器兼容性 - Fallback
+   ============================================ */
+
+@supports not (backdrop-filter: blur(10px)) {
+  .book-page {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  .book-menu-content,
+  .book-toc-content {
+    background: rgba(255, 255, 255, 0.85);
+  }
+
+  .book-post {
+    background: rgba(255, 255, 255, 0.9);
+  }
+
+  pre,
+  .highlight {
+    background: rgba(30, 35, 45, 0.95) !important;
+  }
+
+  :not(pre) > code {
+    background: rgba(100, 150, 255, 0.25) !important;
+  }
+}
+
+/* ============================================
+   12. 特殊效果和动画 - Special Effects
+   ============================================ */
+
+/**
+ * 焦点状态
+ */
+a:focus,
+button:focus,
+input:focus {
+  outline: 2px solid rgba(100, 150, 255, 0.6) !important;
+  outline-offset: 2px !important;
+}
+
+/**
+ * 文本选择
+ */
+::selection {
+  background: rgba(100, 150, 255, 0.3);
+  color: inherit;
+}
+
+/**
+ * 平滑滚动
+ */
+html {
+  scroll-behavior: smooth;
+}
+
+/**
+ * 页面加载动画
+ */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.book-post {
+  animation: fadeIn 0.6s ease-out;
+}
+
+/* ============================================
+   13. 打印样式 - Print Styles
+   ============================================ */
+
+@media print {
+  body {
+    background: white !important;
+
+    &::before {
+      display: none !important;
+    }
+  }
+
+  .book-page,
+  .book-menu-content,
+  .book-toc-content,
+  .book-post {
+    background: white !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+}
+
+/* ============================================
+   End of Ambient Glassmorphism Theme v2.0
+   ============================================ */
