@@ -1,17 +1,5 @@
 ---
-
-title: "快速开始"
-
+title: "Tutorial"
 weight: 1
-
-bookCollapseSection: false
-
+bookCollapseSection: true
 ---
-
-  
-
-# 快速开始
-
-  
-
-这里是入门指南。
