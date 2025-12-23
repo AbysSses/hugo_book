@@ -55,7 +55,7 @@ if [ $? -eq 0 ]; then
     # 系统通知（可选）
     if command -v terminal-notifier &> /dev/null; then
         terminal-notifier \
-            -message "已推送到 GitHub ($BRANCH)" \
+            -message "已推送到 GitHub-hugo_book ($BRANCH)" \
             -title "Git Push 完成" \
             2>/dev/null
     fi
