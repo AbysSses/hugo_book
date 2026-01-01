@@ -18,13 +18,17 @@ LastMod: 2025-12-23 15:11:43
 conda activate ov
 
 # 2. 安装 ipykernel
-conda install ipykernel
+mamba install ipykernel
 
 # 3. 将环境添加到 Jupyter
 python -m ipykernel install --user --name=ov --display-name "Python (ov)"
 python -m ipykernel install --user --name ov
-
-
+python -m ipykernel install --user --name=rapids --display-name "Python (rapids_ov)"
+# 4.检查当前内核使用的环境
+```python
+import sys
+sys.executable
+```
 
 ## R
 将一个新的 R 环境添加为 Jupyter (Notebook 或 Lab) 的内核。
@@ -72,6 +76,9 @@ python -m ipykernel install --user --name ov
 4. 重启 Jupyter Notebook / JupyterLab:
     
     关闭当前所有正在运行的 Jupyter 实例，然后重新启动它。
-    
+5. 检查当前内核使用的环境
+```R
+Sys.which("R")
+.libPaths()
+Sys.getenv("CONDA_DEFAULT_ENV")
 
-完成以上步骤后，就能在 Jupyter 的内核菜单（例如 "Kernel" -> "Change kernel"）或者新建 Notebook 时的启动器 (Launcher) 中看到你刚刚添加的内核。
