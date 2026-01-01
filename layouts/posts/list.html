@@ -10,7 +10,7 @@
         <div class="book-post-meta">
           {{ partial "docs/post-meta" . }}
         </div>
-        <div class="book-post-content markdown-inner">
+        <div class="book-post-content book-post-summary markdown-inner">
           {{- .Summary | truncate 256 -}}
         </div>
       </div>

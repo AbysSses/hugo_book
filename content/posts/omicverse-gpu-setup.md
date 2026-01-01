@@ -4,8 +4,8 @@ title: ！！！！！我终于安装好了完美的GPU支持的omicverse
 date: 2026-01-01 08:00:00
 draft: false
 tags:
-slug: omicverse-gpu-setup
   - hugo-book-post
+slug: omicverse-gpu-setup
 LastMod: 2026-01-01 23:18:06
 ---
 新年快乐！

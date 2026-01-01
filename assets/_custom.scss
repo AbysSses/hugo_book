@@ -898,3 +898,8 @@ html {
 /* ============================================
    End of Ambient Glassmorphism Theme v2.0
    ============================================ */
+
+/* Hide images in post list summaries */
+.book-post-summary img {
+  display: none !important;
+}
