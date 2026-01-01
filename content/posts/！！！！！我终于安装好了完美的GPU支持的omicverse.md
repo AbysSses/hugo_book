@@ -1,20 +1,11 @@
 ---
 weight:
-
-  
-
 title: ！！！！！我终于安装好了完美的GPU支持的omicverse
-
 date: 2026-01-01 23:17:45
-
 draft: false
-
-tags: []
-
+tags:
+  - hugo-book-post
 LastMod: 2026-01-01 23:18:06
-
-  
-
 ---
 新年快乐！
 
