@@ -3,6 +3,7 @@ baseURL = 'https://book.abysses.love/'
 languageCode = 'zh-cn'
 title = '⚡Abyss⚡'
 theme = 'hugo-book'
+timeZone = "Asia/Shanghai"
 
 [params]
   BookSearch = true        # 开启搜索
