@@ -1,11 +1,15 @@
 ---
-title: 页面标题
+date: 2026-01-05 17:44:20
+draft: false
+tags: []
+title: R数据清洗常用函数
 weight: 1
 bookToc: true
 bookHidden: false
 bookCollapseSection: true
 bookComments: false
 bookSearchExclude: false
+LastMod: 2026-01-05 18:19:04
 ---
 下面是 **R 语言常用数据处理函数速查表**（按“基础 R / tidyverse / dplyr”为主来整理）。
 
