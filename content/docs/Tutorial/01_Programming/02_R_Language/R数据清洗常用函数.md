@@ -9,7 +9,7 @@ bookHidden: false
 bookCollapseSection: true
 bookComments: false
 bookSearchExclude: false
-LastMod: 2026-01-05 18:19:04
+LastMod: 2026-01-05 18:23:48
 ---
 下面是 **R 语言常用数据处理函数速查表**（按“基础 R / tidyverse / dplyr”为主来整理）。
 
@@ -333,4 +333,3 @@ wide <- long %>% tidyr::pivot_wider(names_from = feature, values_from = value)
 
 ---
 
-如果你愿意，我也可以把这份速查表 **整理成“可打印 1 页版”**（更像 cheatsheet），或者按你做的方向（例如 scRNA / 空间转录组）把例子换成：`meta.data` 清洗、marker 表处理、按 cluster 汇总比例、`pivot_longer` 转 “gene × cluster” 长表这种更贴你场景的版本。
